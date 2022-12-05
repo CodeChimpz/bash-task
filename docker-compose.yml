@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  server:
+    stdin_open: true
+    tty: true
+    build:
+      dockerfile: Dockerfile
+    environment:
+      HOST: db
+      PORT: 3306
+      USER: user
+      DB: knex-test
+      PASSWORD: 123
+      MIN_CONN_POOL: 0
+      MAX_CONN_POOL: 10
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: knex-test
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 123
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  db:
